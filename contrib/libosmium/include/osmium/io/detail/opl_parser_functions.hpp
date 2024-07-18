@@ -283,7 +283,16 @@ namespace osmium {
                     *s += 20;
                     return timestamp;
                 } catch (const std::invalid_argument&) {
-                    throw opl_error{"can not parse timestamp", *s};
+                    // Retry parsing by adding 'Z' at the end to see if it is due to missing Z info in timestamp
+                    std::string timestamp_str{*s};
+                    timestamp_str += 'Z';
+                    try {
+                        osmium::Timestamp timestamp{timestamp_str.c_str()};
+                        *s += 20;
+                        return timestamp;
+                    } catch (const std::invalid_argument&) {
+                        throw opl_error{"can not parse timestamp", *s};
+                    }
                 }
             }
 
