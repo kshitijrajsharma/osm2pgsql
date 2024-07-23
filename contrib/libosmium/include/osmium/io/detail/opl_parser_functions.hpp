@@ -291,7 +291,7 @@ namespace osmium {
                         *s += 20;
                         return timestamp;
                     } catch (const std::invalid_argument&) {
-                        throw opl_error{"can not parse timestamp", *s};
+                        throw opl_error{"can not parse yar timestamp", *s};
                     }
                 }
             }
