@@ -87,11 +87,16 @@ namespace osmium {
 
             std::string timestamp_str{str};
 
+            // Find the position of the period (.) and strip everything after it
+            size_t pos = timestamp_str.find('.');
+            if (pos != std::string::npos) {
+                timestamp_str.erase(pos);
+            }
+
             // Check if the last character is 'Z'; if not, add 'Z' to the end
             if (timestamp_str.back() != 'Z') {
                 timestamp_str += 'Z';
             }
-
             if (timestamp_str[ 0] >= '0' && timestamp_str[ 0] <= '9' &&
                 timestamp_str[ 1] >= '0' && timestamp_str[ 1] <= '9' &&
                 timestamp_str[ 2] >= '0' && timestamp_str[ 2] <= '9' &&
