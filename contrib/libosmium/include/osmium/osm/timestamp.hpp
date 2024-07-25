@@ -131,7 +131,7 @@ namespace osmium {
 #endif
                 }
             }
-            throw std::invalid_argument{std::string{"can not parse timestamp: '"} + str + "'"};
+            throw std::invalid_argument{std::string{"can not parse  yar timestamp: '"} + str + "'"};
         }
 
     } // namespace detail
