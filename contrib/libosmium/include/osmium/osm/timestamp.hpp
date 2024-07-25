@@ -84,40 +84,44 @@ namespace osmium {
                 31, 29, 31, 30, 31, 30,
                 31, 31, 30, 31, 30, 31
             }};
-            if (str.back() != 'Z') {
-                str += 'Z';
+
+            std::string timestamp_str{str};
+
+            // Check if the last character is 'Z'; if not, add 'Z' to the end
+            if (timestamp_str.back() != 'Z') {
+                timestamp_str += 'Z';
             }
 
-            if (str[ 0] >= '0' && str[ 0] <= '9' &&
-                str[ 1] >= '0' && str[ 1] <= '9' &&
-                str[ 2] >= '0' && str[ 2] <= '9' &&
-                str[ 3] >= '0' && str[ 3] <= '9' &&
-                str[ 4] == '-' &&
-                str[ 5] >= '0' && str[ 5] <= '9' &&
-                str[ 6] >= '0' && str[ 6] <= '9' &&
-                str[ 7] == '-' &&
-                str[ 8] >= '0' && str[ 8] <= '9' &&
-                str[ 9] >= '0' && str[ 9] <= '9' &&
-                str[10] == 'T' &&
-                str[11] >= '0' && str[11] <= '9' &&
-                str[12] >= '0' && str[12] <= '9' &&
-                str[13] == ':' &&
-                str[14] >= '0' && str[14] <= '9' &&
-                str[15] >= '0' && str[15] <= '9' &&
-                str[16] == ':' &&
-                str[17] >= '0' && str[17] <= '9' &&
-                str[18] >= '0' && str[18] <= '9' &&
-                str[19] == 'Z') {
-                std::tm tm; // NOLINT(cppcoreguidelines-pro-type-member-init,hicpp-member-init)
-                tm.tm_year = (str[ 0] - '0') * 1000 +
-                             (str[ 1] - '0') *  100 +
-                             (str[ 2] - '0') *   10 +
-                             (str[ 3] - '0')        - 1900;
-                tm.tm_mon  = (str[ 5] - '0') * 10 + (str[ 6] - '0') - 1;
-                tm.tm_mday = (str[ 8] - '0') * 10 + (str[ 9] - '0');
-                tm.tm_hour = (str[11] - '0') * 10 + (str[12] - '0');
-                tm.tm_min  = (str[14] - '0') * 10 + (str[15] - '0');
-                tm.tm_sec  = (str[17] - '0') * 10 + (str[18] - '0');
+            if (timestamp_str[ 0] >= '0' && timestamp_str[ 0] <= '9' &&
+                timestamp_str[ 1] >= '0' && timestamp_str[ 1] <= '9' &&
+                timestamp_str[ 2] >= '0' && timestamp_str[ 2] <= '9' &&
+                timestamp_str[ 3] >= '0' && timestamp_str[ 3] <= '9' &&
+                timestamp_str[ 4] == '-' &&
+                timestamp_str[ 5] >= '0' && timestamp_str[ 5] <= '9' &&
+                timestamp_str[ 6] >= '0' && timestamp_str[ 6] <= '9' &&
+                timestamp_str[ 7] == '-' &&
+                timestamp_str[ 8] >= '0' && timestamp_str[ 8] <= '9' &&
+                timestamp_str[ 9] >= '0' && timestamp_str[ 9] <= '9' &&
+                timestamp_str[10] == 'T' &&
+                timestamp_str[11] >= '0' && timestamp_str[11] <= '9' &&
+                timestamp_str[12] >= '0' && timestamp_str[12] <= '9' &&
+                timestamp_str[13] == ':' &&
+                timestamp_str[14] >= '0' && timestamp_str[14] <= '9' &&
+                timestamp_str[15] >= '0' && timestamp_str[15] <= '9' &&
+                timestamp_str[16] == ':' &&
+                timestamp_str[17] >= '0' && timestamp_str[17] <= '9' &&
+                timestamp_str[18] >= '0' && timestamp_str[18] <= '9' &&
+                timestamp_str[19] == 'Z') {
+                std::tm tm{}; // NOLINT(cppcoreguidelines-pro-type-member-init,hicpp-member-init)
+                tm.tm_year = (timestamp_str[ 0] - '0') * 1000 +
+                             (timestamp_str[ 1] - '0') *  100 +
+                             (timestamp_str[ 2] - '0') *   10 +
+                             (timestamp_str[ 3] - '0')        - 1900;
+                tm.tm_mon  = (timestamp_str[ 5] - '0') * 10 + (timestamp_str[ 6] - '0') - 1;
+                tm.tm_mday = (timestamp_str[ 8] - '0') * 10 + (timestamp_str[ 9] - '0');
+                tm.tm_hour = (timestamp_str[11] - '0') * 10 + (timestamp_str[12] - '0');
+                tm.tm_min  = (timestamp_str[14] - '0') * 10 + (timestamp_str[15] - '0');
+                tm.tm_sec  = (timestamp_str[17] - '0') * 10 + (timestamp_str[18] - '0');
                 tm.tm_wday = 0;
                 tm.tm_yday = 0;
                 tm.tm_isdst = 0;
@@ -134,7 +138,7 @@ namespace osmium {
 #endif
                 }
             }
-            throw std::invalid_argument{std::string{"can not parse  yar timestamp: '"} + str + "'"};
+            throw std::invalid_argument{std::string{"can not parse timestamp: '"} + str + "'"};
         }
 
     } // namespace detail
